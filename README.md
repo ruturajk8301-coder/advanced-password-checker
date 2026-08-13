@@ -29,6 +29,15 @@ The application performs its analysis locally, without sending passwords to exte
 - **string** — Character-set handling
 - **math** — Entropy calculations
 
+## 🔐 Security & Design Notes
+
+- Password generation uses Python's `secrets` module for security-sensitive random generation.
+- The generator guarantees at least one lowercase letter, uppercase letter, digit, and punctuation character.
+- Character sets are derived from Python's standard `string` module to keep password generation and entropy estimation consistent.
+- Password analysis is performed locally and passwords are not transmitted to external services.
+- Entropy is an estimated search-space value and should not be treated as a complete measure of password security.
+- The application uses heuristic pattern penalties for predictable structures; it does not perform dictionary or breach-database checks.
+
 ## 📂 Project Structure
 
 ```text

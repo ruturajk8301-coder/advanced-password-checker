@@ -11,7 +11,7 @@ def generate_secure_password(length=16):
     lowercase = string.ascii_lowercase
     uppercase = string.ascii_uppercase
     digits = string.digits
-    symbols = "!@#$%^&*()_+"
+    symbols = string.punctuation
 
     all_characters = lowercase + uppercase + digits + symbols
 
@@ -23,13 +23,13 @@ def generate_secure_password(length=16):
         secrets.choice(symbols)
     ]
 
-    # Fill the remaining positions using cryptographically secure randomness
+    # Fill remaining positions using cryptographically secure randomness
     password += [
         secrets.choice(all_characters)
         for _ in range(length - 4)
     ]
 
-    # Securely construct the final order without using random.shuffle()
+    # Securely randomize the final character order
     result = []
 
     while password:
