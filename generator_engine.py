@@ -1,9 +1,13 @@
-import random
+import secrets
 import string
 
 
 def generate_secure_password(length=16):
-    """Generates an extremely secure, random password string."""
+    """Generate a cryptographically secure random password."""
+
+    if length < 4:
+        raise ValueError("Password length must be at least 4.")
+
     lowercase = string.ascii_lowercase
     uppercase = string.ascii_uppercase
     digits = string.digits
@@ -11,15 +15,25 @@ def generate_secure_password(length=16):
 
     all_characters = lowercase + uppercase + digits + symbols
 
+    # Guarantee at least one character from each required category
     password = [
-        random.choice(lowercase),
-        random.choice(uppercase),
-        random.choice(digits),
-        random.choice(symbols)
+        secrets.choice(lowercase),
+        secrets.choice(uppercase),
+        secrets.choice(digits),
+        secrets.choice(symbols)
     ]
 
-    password += [random.choice(all_characters) for _ in range(length - 4)]
+    # Fill the remaining positions using cryptographically secure randomness
+    password += [
+        secrets.choice(all_characters)
+        for _ in range(length - 4)
+    ]
 
-    random.shuffle(password)
+    # Securely construct the final order without using random.shuffle()
+    result = []
 
-    return "".join(password)
+    while password:
+        index = secrets.randbelow(len(password))
+        result.append(password.pop(index))
+
+    return "".join(result)
